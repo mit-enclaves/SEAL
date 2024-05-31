@@ -32,7 +32,7 @@ if(SEAL_BUILD_EXAMPLES)
     )
 
     if(TARGET SEAL::seal)
-        target_link_libraries(sealexamples PRIVATE SEAL::seal)
+        target_link_libraries(sealexamples PRIVATE SEAL::seal c++ c++abi m pthread dl util rt c)
     elseif(TARGET SEAL::seal_shared)
         target_link_libraries(sealexamples PRIVATE SEAL::seal_shared)
     else()

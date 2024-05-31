@@ -3,6 +3,8 @@
 
 #include "examples.h"
 
+void *__dso_handle = (void *) &__dso_handle;
+
 using namespace std;
 using namespace seal;
 
