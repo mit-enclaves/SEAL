@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 3.13)
 
 project(SEALExamples VERSION 4.1.1 LANGUAGES CXX)
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 # If not called from root CMakeLists.txt
 if(NOT DEFINED SEAL_BUILD_EXAMPLES)
     set(SEAL_BUILD_EXAMPLES ON)
@@ -22,13 +24,6 @@ if(SEAL_BUILD_EXAMPLES)
         PRIVATE
             ${CMAKE_CURRENT_LIST_DIR}/examples.cpp
             ${CMAKE_CURRENT_LIST_DIR}/1_bfv_basics.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/2_encoders.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/3_levels.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/4_bgv_basics.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/5_ckks_basics.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/6_rotation.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/7_serialization.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/8_performance.cpp
     )
 
     if(TARGET SEAL::seal)
