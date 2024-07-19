@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(SEALExamples VERSION 4.1.1 LANGUAGES CXX)
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
+get_filename_component(CUR_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 # If not called from root CMakeLists.txt
 if(NOT DEFINED SEAL_BUILD_EXAMPLES)
@@ -20,6 +20,8 @@ endif()
 if(SEAL_BUILD_EXAMPLES)
     add_executable(sealexamples)
 
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,${CUR_DIR}/eh_frame_symbols.ld")
+
     target_sources(sealexamples
         PRIVATE
             ${CMAKE_CURRENT_LIST_DIR}/examples.cpp
@@ -33,4 +35,5 @@ if(SEAL_BUILD_EXAMPLES)
     else()
         message(FATAL_ERROR "Cannot find target SEAL::seal or SEAL::seal_shared")
     endif()
+
 endif()
