@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 3.13)
 
 project(SEALBench VERSION 4.1.1 LANGUAGES CXX)
 
+get_filename_component(CUR_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
 # If not called from root CMakeLists.txt
 if(NOT DEFINED SEAL_BUILD_BENCH)
     set(SEAL_BUILD_BENCH ON)
@@ -49,6 +51,9 @@ if(SEAL_BUILD_BENCH)
     endif()
 
     add_executable(sealbench)
+
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,${CUR_DIR}/eh_frame_symbols.ld")
+
     # If we're targeting WASM, add the appropriate link flags
     if(EMSCRIPTEN)
         set_target_properties(sealbench PROPERTIES LINK_FLAGS "-flto -O3 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 -s MAXIMUM_MEMORY=4GB")
@@ -64,7 +69,7 @@ if(SEAL_BUILD_BENCH)
     )
 
     if(TARGET SEAL::seal)
-        target_link_libraries(sealbench PRIVATE SEAL::seal benchmark::benchmark)
+        target_link_libraries(sealbench PRIVATE SEAL::seal benchmark::benchmark c++ c++abi m pthread dl util rt c)
     elseif(TARGET SEAL::seal_shared)
         target_link_libraries(sealbench PRIVATE SEAL::seal_shared benchmark::benchmark)
     else()

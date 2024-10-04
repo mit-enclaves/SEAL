@@ -5,6 +5,8 @@
 #include "bench.h"
 #include <iomanip>
 
+void *__dso_handle = (void *) &__dso_handle;
+
 using namespace benchmark;
 using namespace seal;
 using namespace sealbench;
