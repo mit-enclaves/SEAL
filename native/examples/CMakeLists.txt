@@ -25,7 +25,7 @@ if(SEAL_BUILD_EXAMPLES)
     target_sources(sealexamples
         PRIVATE
             ${CMAKE_CURRENT_LIST_DIR}/examples.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/1_bfv_basics.cpp
+            ${CMAKE_CURRENT_LIST_DIR}/viand2023.cpp
     )
 
     if(TARGET SEAL::seal)

@@ -24,7 +24,7 @@ int main()
     size_t megabytes = MemoryManager::GetPool().alloc_byte_count() >> 20;
     cout << "[" << setw(7) << right << megabytes << " MB] "
          << "Total allocation from the memory pool" << endl;
-    example_bfv_basics();
+    viand2023();
     
     return 0;
 }
