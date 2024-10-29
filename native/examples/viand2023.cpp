@@ -8,13 +8,12 @@ using namespace std;
 using namespace seal;
 
 // Benchmarking
-size_t NUM_REPEATS = 5;
-size_t NUM_CTXTS = 1;
-//std::chrono::time_point<std::chrono::high_resolution_clock> time_start;
-//std::chrono::time_point<std::chrono::high_resolution_clock> time_end;
-unsigned int aux;
-unsigned long long time_start;
-unsigned long long time_end;
+size_t NUM_REPEATS = 100;
+std::chrono::time_point<std::chrono::high_resolution_clock> time_start;
+std::chrono::time_point<std::chrono::high_resolution_clock> time_end;
+// unsigned int aux;
+// unsigned long long time_start;
+// unsigned long long time_end;
 
 
 // FHE params
@@ -61,8 +60,9 @@ void print_SEAL_options() {
 }
 
 void print_time(string func_name, unsigned long long elapsed_time) {
-	cout << "[TIME] " << func_name << "\t" << fixed << setprecision(0) << right
-		<< setw(10) << elapsed_time / float(NUM_REPEATS) / float(3600000) << " us" << endl;
+	cout << "[TIME] " << func_name << "\t" << setprecision(6) << right
+		<< setw(10) << elapsed_time / float(NUM_REPEATS) << " us" << endl;
+		//<< setw(10) << elapsed_time / float(NUM_REPEATS) / float(3600) << " us" << endl;
 }
 
 void print_header(string header, int width = 50) {
@@ -223,8 +223,8 @@ void viand2023() {
 	// Ask enclave to compute workload
 	elapsed_time = 0;
 	for (size_t i = 0; i < NUM_REPEATS; i++) {
-		// time_start = chrono::high_resolution_clock::now();
-		time_start = __rdtscp(&aux);
+		time_start = chrono::high_resolution_clock::now();
+		//time_start = __rdtscp(&aux);
 		if (bench_name == "tiny") {
 			eval_tiny();
 		}
@@ -238,12 +238,10 @@ void viand2023() {
 			throw invalid_argument(bench_name);
 		}
 
-		// time_end = chrono::high_resolution_clock::now();
-		time_end = __rdtscp(&aux);
-		// elapsed_time +=
-		// 	chrono::duration_cast<chrono::microseconds>(time_end - time_start)
-		// 	.count();
-		elapsed_time += time_end - time_start;
+		time_end = chrono::high_resolution_clock::now();
+		//time_end = __rdtscp(&aux);
+		elapsed_time += chrono::duration_cast<chrono::microseconds>(time_end - time_start).count();
+		//elapsed_time += time_end - time_start;
 	}
 
 	print_time(bench_name, elapsed_time);
