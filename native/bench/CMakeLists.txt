@@ -69,7 +69,7 @@ if(SEAL_BUILD_BENCH)
     )
 
     if(TARGET SEAL::seal)
-        target_link_libraries(sealbench PRIVATE SEAL::seal benchmark::benchmark c++ c++abi m pthread dl util rt c)
+        target_link_libraries(sealbench PRIVATE SEAL::seal benchmark::benchmark c++ c++abi clang_rt.builtins-x86_64 m pthread dl util rt c)
     elseif(TARGET SEAL::seal_shared)
         target_link_libraries(sealbench PRIVATE SEAL::seal_shared benchmark::benchmark)
     else()
