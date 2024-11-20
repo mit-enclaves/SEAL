@@ -8,7 +8,7 @@ using namespace std;
 using namespace seal;
 
 // Benchmarking
-size_t NUM_REPEATS = 100000;
+size_t NUM_REPEATS = 100;
 //std::chrono::time_point<std::chrono::high_resolution_clock> time_start;
 //std::chrono::time_point<std::chrono::high_resolution_clock> time_end;
 unsigned int aux;
@@ -169,7 +169,8 @@ void init_evaluator(void) {
 	print_SEAL_options();
 }
 
-void eval_tiny(Ciphertext* res) {
+void eval_tiny() {
+	Ciphertext* res = new Ciphertext();
 	try {
 		evaluator->multiply(ciphertexts[0], ciphertexts[1], *res);
 	}
@@ -183,6 +184,7 @@ void eval_tiny(Ciphertext* res) {
 		ciphertexts.resize(output + 1);
 	}
 	ciphertexts[output] = *res;
+	delete res;
 }
 
 void eval_small() {
@@ -198,6 +200,7 @@ void eval_small() {
 		cerr << "small threw exception: " << e.what() << endl << flush;
 		throw e;
 	}
+	delete res;
 }
  
 void eval_medium() {
@@ -215,6 +218,7 @@ void eval_medium() {
 		cerr << "medium threw exception: " << e.what() << endl << flush;
 		throw e;
 	}
+	delete res;
 }
 
 void viand2023(string name) {
@@ -223,16 +227,16 @@ void viand2023(string name) {
 
 	// Init evaluator
 	init_evaluator();
-	Ciphertext* res = new Ciphertext();
 	cout << "init_evaluator done" << endl;
 
 	// Ask enclave to compute workload
 	elapsed_time = 0;
+	
 	//time_start = chrono::high_resolution_clock::now();
 	time_start = __rdtscp(&aux);
 	for (size_t i = 0; i < NUM_REPEATS; i++) {
 		if (bench_name == "tiny") {
-			eval_tiny(res);
+			eval_tiny();
 		}
 		else if (bench_name == "small") {
 			eval_small();

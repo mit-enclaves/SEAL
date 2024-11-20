@@ -13,7 +13,7 @@ using namespace seal;
 int main()
 {
     viand2023("tiny");
-    //viand2023("small");
-    //viand2023("medium");
+    viand2023("small");
+    viand2023("medium");
     return 0;
 }
