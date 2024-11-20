@@ -36,6 +36,8 @@ void example_serialization();
 
 void example_performance_test();
 
+void viand2023(std::string name);
+
 /*
 Helper function: Prints the name of the example in a fancy banner.
 */
