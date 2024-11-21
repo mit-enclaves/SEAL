@@ -8,7 +8,7 @@ using namespace std;
 using namespace seal;
 
 // Benchmarking
-size_t NUM_REPEATS = 100;
+size_t NUM_REPEATS = 1000;
 //std::chrono::time_point<std::chrono::high_resolution_clock> time_start;
 //std::chrono::time_point<std::chrono::high_resolution_clock> time_end;
 unsigned int aux;
@@ -60,14 +60,10 @@ void print_SEAL_options() {
 }
 
 void print_time(string func_name, unsigned long long elapsed_time) {
-	cout << "[CYCLES TOTAL] " << func_name << "\t" << setprecision(6) << right
-	    << setw(10) << elapsed_time << " cycles" << endl;
-	cout << "[TIME TOTAL] " << func_name << "\t" << setprecision(6) << right
-	    << setw(10) << elapsed_time / float(3600) << " us" << endl;
-	cout << "[CYCLES] " << func_name << "\t" << setprecision(6) << right
-	    << setw(10) << elapsed_time / float(NUM_REPEATS) << " cycles" << endl;
-	cout << "[TIME] " << func_name << "\t" << setprecision(6) << right
-	    << setw(10) << elapsed_time / float(NUM_REPEATS) / float(3600) << " us" << endl;
+	cout << "[CYCLES TOTAL] " << func_name << "\t" << setprecision(9) << right
+	    << setw(16) << elapsed_time << " cycles" << endl;
+	cout << "[CYCLES] " << func_name << "\t" << setprecision(9) << right
+	    << setw(16) << (long int) (elapsed_time / float(NUM_REPEATS)) << " cycles" << endl;
 }
 
 void print_header(string header, int width = 50) {
