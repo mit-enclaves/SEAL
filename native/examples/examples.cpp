@@ -21,18 +21,10 @@ public:
 
 private:
     static void print_timestamp(const char* prefix) {
-        using namespace std::chrono;
-        auto now = high_resolution_clock::now();
-        auto duration = now.time_since_epoch();
-        
-        // Get seconds and nanoseconds separately
-        auto secs = duration_cast<std::chrono::seconds>(duration);
-        auto nsecs = duration_cast<std::chrono::nanoseconds>(duration - secs);
-        
-        // Print with exact same format as date +%s.%N
+        unsigned int aux;
+        auto cycles = __rdtscp(&aux);
         std::cout << prefix 
-                 << secs.count() << "."
-                 << std::setfill('0') << std::setw(9) << nsecs.count()
+                 << cycles
                  << std::endl;
     }
 };
